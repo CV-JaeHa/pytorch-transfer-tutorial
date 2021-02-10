@@ -45,7 +45,7 @@ def imshow(inp, title=None):
     mean = np.array([0.485, 0.456, 0.406])
     std = np.array([0.229, 0.224, 0.225])
     inp = std * inp + mean
-    inp = np.clip(inp, 0, )
+    inp = np.clip(inp, 0, 1)
     plt.imshow(inp)
     if title is not None:
         plt.title(title)
@@ -58,3 +58,10 @@ inputs, classes = next(iter(dataloaders['train']))
 out = torchvision.utils.make_grid(inputs)
 
 imshow(out, title=[class_names[x] for x in classes])
+
+# Model Learning
+def train_model(model, criterion, optimizer, scheduler, num_epochs=25):
+    since = time.time()
+
+    best_model_wts = copy.deepcopy(model.state_dict())
+    best_acc = 0.0
